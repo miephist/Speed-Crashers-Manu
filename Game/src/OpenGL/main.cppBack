@@ -1,0 +1,276 @@
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include "Arbol/TNode.h"
+#include "Arbol/TEntity.h"
+#include "Arbol/TTransform.h"
+#include "Arbol/TLight.h"
+#include "Arbol/TCamera.h"
+#include "Arbol/TEngine.h"
+#include "ResourceManager/TResourceMesh.h"
+
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/constants.hpp>
+
+int main(){
+
+    // CREAR LA ESTRCUTURA UTILIZANDO TENGINE
+
+    //---- Crear la estructura del arbol ----
+
+/*
+    TNode *Scene = new TNode();
+    TNode *RotCam = new TNode();
+    TNode *RotCar = new TNode();
+
+    Scene->addChild(RotCam);
+    Scene->addChild(RotCar);
+
+    TNode *TransCam = new TNode();
+    TNode *TransCar1 = new TNode();
+    TNode *TransCar2 = new TNode();
+
+    RotCam->addChild(TransCam);
+    RotCar->addChild(TransCar1);
+    RotCar->addChild(TransCar2);
+*/
+
+    //RotCar->addChild(TransCar3);
+
+    /*TNode *TransCar11 = new TNode();
+    TNode *TransCar22 = new TNode();
+
+    TransCar1->addChild(TransCar11);
+    TransCar1->addChild(TransCar22);   
+
+    TNode *TransCar111 = new TNode();
+    TNode *TransCar112 = new TNode();
+    TNode *TransCar113 = new TNode();
+    TNode *TransCar114 = new TNode();
+    TNode *TransCar115= new TNode();
+
+
+    TransCar11->addChild(TransCar111);
+    TransCar11->addChild(TransCar112); 
+    TransCar11->addChild(TransCar113);
+    TransCar11->addChild(TransCar114);
+    TransCar11->addChild(TransCar115);*/
+
+
+
+//mejor uso
+/*
+    TTransform *rot = new TTransform();
+    rot->scale(2,2,4);
+    RotCam->setEntity(rot);
+
+    TTransform *trans = new TTransform();
+    trans->translate(7,1,0);
+    TransCam->setEntity(trans);
+
+
+    TTransform *rotCar = new TTransform();
+    rotCar->scale(2,2,2);
+    RotCar->setEntity(rotCar);
+
+
+    TTransform *trasCar1 = new TTransform();
+    trasCar1->translate(5,3,4);
+    TransCar1->setEntity(trasCar1);
+
+    TTransform *trasCar2 = new TTransform();
+    trasCar2->translate(1,1,2);
+    TransCar2->setEntity(trasCar2);
+
+
+    Scene->draw();*/
+
+    //hasta aqui
+
+//vamos a probar cosas
+
+//aqui terminamos de probar
+
+    //mirar modelview de rot
+
+    //Scene->removeAll(TransCar1);
+
+        //Scene->draw();
+
+    //---- Anyadir las entidades a los nodos ----
+
+    /*
+    
+    TTransform *TransfRotLight = new TTransform();
+    TTransform *TransfRotCam = new TTransform();
+    TTransform *TransfRotCar = new TTransform();
+
+    RotLight->setEntity(TransfRotLight);
+    RotCam->setEntity(TransfRotCam);
+    RotCar->setEntity(TransfRotCar);
+
+
+    TLight *EntLight = new TLight();
+    TCamera *EntCam = new TCamera();
+    TMesh *ChassisMesh = new TMesh();
+*/
+    
+
+    //NLight->setEntity(EntLight);
+    //NCam->setEntity(EntCam);
+    //NChassis->setEntity(ChassisMesh);
+
+    //---- Recorrer el arbol (dibujarlo) ----
+    // Core dumped
+    //Scene->draw();
+
+    // Creamos el motor
+    TEngine *motor = new TEngine();
+
+    //espectaculo de nodos
+
+    //creamos algunas entidades y las modificamos;
+    TTransform* transf1= motor->createTransform();
+    TTransform* transf2= motor->createTransform();
+
+    transf1->scale(0.5,0.25,0.5);
+    transf2->translate(0,0,-300);
+
+    //Creamos algunos nodos y les asociamos las entidades anteriores
+
+    // SEGMENTATION FAULT
+    TNode* nodoTransf1=motor->createNode(motor->getScene(),transf1);
+    TNode* nodoTransf2=motor->createNode(nodoTransf1,transf2);
+
+    //Creamos más entidades y nodos
+    std::string ruta = "../../media/Coche.obj";
+    const char *obj = ruta.c_str();
+
+    float pi=glm::pi<float>();
+
+    TResourceMesh* malla1=motor->createMesh(obj);
+    transf2->rotate(-pi,1,1,1);
+
+    //ahora luces
+    /*TLight *luz= motor->createLight();
+    TNode *nodeLuz=motor->createNode(nodoTransf2,luz);*/
+    /*int nLuz=motor->insertLight(nodeLuz);
+    motor->setActiveLight(nLuz);*/
+
+    /*TCamera *Camera= motor->createCamera();
+    TNode *nodeCamara= motor->createNode(nodoTransf1,Camera);*/
+    
+    //insertar camara en array y obtener posicion
+    //int nCamera=motor->insertCamera(nodeCamara);
+
+    //motor->setActiveCamera(nCamera);
+
+
+    motor->getScene()->draw();
+    //hay que indicar en draw el tipo de pasada
+    //Luces, Camaras y accion
+    //Profesor lo hace a la guarra, con un int
+
+    //termina el espectaculo
+
+    //std::string ruta = "../../media/Coche.obj";
+
+    //motor->createMesh(obj);
+
+    while(!glfwWindowShouldClose(motor->getWindow())){
+
+        // Limpiamos buffer
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        // Intercambiamos buffers
+        glfwSwapBuffers(motor->getWindow());
+        // Comprueba los eventos
+        glfwPollEvents();
+
+    }
+
+    delete motor;
+
+    return 0;
+}
+
+void cosa(){
+
+    TNode* Scene = new TNode();
+
+    TNode* LightRot = new TNode();
+    TNode* CamRot = new TNode();
+    /*
+    Scene->setId(0);
+    LightRot->setId(1);
+    CamRot->setId(2);
+    */
+    Scene->addChild(LightRot);
+    //Scene->addChild(CamRot);
+    LightRot->addChild(CamRot);
+
+    TNode* LightTras = new TNode();
+    TNode* CamTras = new TNode();
+
+    //LightTras->setId(4);
+    //CamTras->setId(5);
+
+    LightRot->addChild(LightTras);
+    LightTras->addChild(CamTras);
+
+    TTransform* TrasRotLight = new TTransform();
+    TTransform* TrasRotCam = new TTransform();
+
+    float aaa[16];
+    glm::mat4 bbb = glm::make_mat4(aaa);
+
+
+    TrasRotLight->load(bbb);
+    TrasRotCam->load(bbb);
+
+    TrasRotLight->identity();
+    TrasRotCam->identity();
+
+    //TrasRotLight->modelMatrix() = glm::mat4(1.f);
+
+    LightRot->setEntity((TEntity*)TrasRotLight);
+    CamRot->setEntity((TEntity*)TrasRotCam);
+
+    TTransform* TrasTrasLight = new TTransform();
+    TTransform* TrasTrasCam = new TTransform();
+
+    LightTras->setEntity((TEntity*)TrasTrasLight);
+    CamTras->setEntity((TEntity*)TrasTrasCam);
+
+    TrasTrasLight->load(bbb);
+    TrasTrasCam->load(bbb);
+
+    TrasTrasLight->identity();
+    TrasTrasCam->identity();
+
+    //TrasRotLight->scale(2.0,1.0,4.f);
+
+    TrasRotLight->translate(1.0,0.0,0.0);
+    TrasTrasLight->translate(0.f,1.f,0.f);
+
+    TrasRotLight->inverse();
+    //TrasRotLight->transpose();
+    //TrasRotLight->translate(0.f,1.f,0.f);
+
+    //TrasTrasLight->translate(1.f,0.f,0.f);
+
+    //TrasRotLight->rotate(0.f,0.f,0.1,45.f);
+
+
+    Scene->draw();
+    delete TrasRotLight,
+    delete TrasRotCam;
+    delete TrasTrasLight;
+    delete TrasTrasCam;
+    ////std::cout << "Im matrix from TrasRotLight : " <<glm::to_string(TrasRotLight->getMatrix()) << std::endl;
+    ////std::cout << "Im matrix from TrasRotCam : " << glm::to_string(TrasRotCam->getMatrix()) << std::endl;
+    ////std::cout << "Im matrix from TrasTrasLight : " << glm::to_string(TrasTrasLight->getMatrix()) << std::endl;
+    ////std::cout << "Im matrix from TrasTrasCam : " << glm::to_string(TrasTrasCam->getMatrix()) << std::endl;
+    delete Scene;
+
+}

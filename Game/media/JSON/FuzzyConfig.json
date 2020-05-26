@@ -1,0 +1,102 @@
+ {
+    "Atacante":[
+        {
+            "Name": "Campo",
+            "Partes":[
+                {
+                    "Name": "Ataque",
+                    "Minimo": 0,
+                    "Pico": 72,
+                    "Maximo": 144
+                },
+                {
+                    "Name": "Centro",
+                    "Minimo": 72,
+                    "Pico": 144,
+                    "Maximo": 216
+                },
+                {
+                    "Name": "Defensa",
+                    "Minimo": 144,
+                    "Pico": 216,
+                    "Maximo": 288
+                }
+            ]
+        },
+        {
+            "Name": "Pos",
+            "Partes":[
+                {
+                    "Name": "Atras",
+                    "Minimo": 0,
+                    "Pico": 90,
+                    "Maximo": 100
+                },
+                {
+                    "Name": "Lado",
+                    "Minimo": 90,
+                    "Pico": 100,
+                    "Maximo": 110
+                },
+                {
+                    "Name": "Delante",
+                    "Minimo": 100,
+                    "Pico": 110,
+                    "Maximo": 200
+                }
+            ]
+        },
+        {
+            "Name": "Deseabilidad",
+            "Partes":[
+                {
+                    "Name": "Poco",
+                    "Minimo": 0,
+                    "Pico": 25,
+                    "Maximo": 50
+                },
+                {
+                    "Name": "Deseable",
+                    "Minimo": 25,
+                    "Pico": 50,
+                    "Maximo": 75
+                },
+                {
+                    "Name": "Muy",
+                    "Minimo": 50,
+                    "Pico": 75,
+                    "Maximo": 100
+                }
+            ]
+        },
+        {
+            "Name": "Distancia",
+            "Partes":[
+                {
+                    "Name": "MuyC",
+                    "Minimo": 0,
+                    "Pico": 42.25,
+                    "Maximo": 84.5
+                },
+                {
+                    "Name": "Cerca",
+                    "Minimo": 45.25,
+                    "Pico": 84.5,
+                    "Maximo": 169
+                },
+                {
+                    "Name": "Lejos",
+                    "Minimo": 84.5,
+                    "Pico": 169,
+                    "Maximo": 253.5
+                },
+                {
+                    "Name": "MuyL",
+                    "Minimo": 169,
+                    "Pico": 253.5,
+                    "Maximo": 338
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,154 @@
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include "Arbol/TNode.h"
+#include "Arbol/TEntity.h"
+#include "Arbol/TTransform.h"
+#include "Arbol/TLight.h"
+#include "Arbol/TCamera.h"
+#include "Arbol/TMesh.h"
+#include "Arbol/TShaderProgram.h"
+#include "ResourceManager/TResourceMesh.h"
+#include "ResourceManager/TResourceTexture.h"
+#include "Skybox/Skybox.h"
+
+// Interfaz
+#include "Interfaces/ITEngine.h"
+
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/constants.hpp>
+
+int main(){
+
+    ITEngine* rama = ITEngine::getInstancia();
+
+    /*glm::vec3 lightColor(0.33f, 0.42f, 0.18f);
+    glm::vec3 toyColor(1.0f, 0.5f, 0.31f);
+    glm::vec3 result = lightColor * toyColor;
+
+    glm::vec3 lightPos(1.2f,1.0f,2.0f);
+    
+
+    ITEngine* rama = ITEngine::getInstancia();
+
+    unsigned int VBO;
+
+
+    //COASS NUEVAS
+    unsigned int lightVAO;*/
+    /*glGenVertexArrays(1, &lightVAO);
+    glBindVertexArray(lightVAO);
+    // we only need to bind to the VBO, the container's VBO's data already contains the correct data.
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    // set the vertex attributes (only position data for our lamp)
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);*/
+    //FIN COSAS NUEVAS
+    
+    // SKYBOX
+    ITShader* shaderSkybox = rama->createShader("../../media/shaders/Skybox/vertexShader.glsl", "../../media/shaders/Skybox/fragmentShader.glsl");
+    Skybox* skybox = rama->createSkybox();
+
+    ITShader* shad= rama->createShader("../../media/shaders/Lights/vertexShader.glsl", "../../media/shaders/Lights/fragmentShader.glsl");
+    //glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_DIFFUSE), loadedTextures);
+
+    ITLight *l = rama->createLight();
+
+    glm::vec3 pos=glm::vec3(0.0f,1.0f,15.0f);
+    glm::vec3 tar=glm::vec3(0.0f,0.0f,0.0f);
+    viewport v;
+    v.near = 0.1f;
+    v.far = 1000.0f;
+    v.fov = 60.0f;
+    v.ratio = 1.77777777f;
+    ITCamera *cam = rama->createCamera(pos, tar, v);
+
+    /*
+    // Campo
+    ITResourceMesh* campo = rama->createMesh("../../media/Campo_muro2.obj", "../../media/cubetexture.png");
+    campo->setRotation(0,1,0,0);
+    campo->setPosition(0,0,0);
+    */
+
+    ITResourceMesh* pelota = rama->createMesh("../../media/Pelota.obj", "../../media/pelota_diffuse.png");
+    pelota->setPosition(0,0,0);
+
+    //ITResourceMesh* wheelUL = ITEngine::getInstancia()->createMesh("../../media/wheel3.obj", "../../media/tire.png");
+
+    // Rueda superior derecha
+    //ITResourceMesh* wheelUR = ITEngine::getInstancia()->createMesh("../../media/wheel3.obj", "../../media/tire.png");
+
+    // Rueda inferior izquierda
+    //ITResourceMesh* wheelDL = ITEngine::getInstancia()->createMesh("../../media/wheel3.obj", "../../media/tire.png");
+
+    // Rueda inferior derecha
+    //ITResourceMesh* wheelDR = ITEngine::getInstancia()->createMesh("../../media/wheel3.obj", "../../media/tire.png");
+
+    //rama->newHud("MainMenuHUD");
+    //rama->getActiveHud()->addElement("fondo", "../../media/GUI/Fondo Menu.png");
+    //rama->getActiveHud()->traslateElement("fondo", 1, 1);
+    //rama->getActiveHud()->scaleElement("fondo", 1, 1);
+    //rama->getActiveHud()->rotateElement("fondo", 45);
+    //rama->getActiveHud()->addElement("local", "../../media/GUI/btn_local_normal.png");
+    //rama->getActiveHud()->scaleElement("local", 10.0f, 10.0f);
+
+    // Skybox
+
+    // Capturar la tecla ESC cuando sea presionada
+    glfwSetInputMode(rama->getWindow(), GLFW_STICKY_KEYS, GL_TRUE);
+
+    while(!glfwWindowShouldClose(rama->getWindow())){
+
+        // Limpiamos buffer
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        // Movimiento camara con teclas
+        if (glfwGetKey(rama->getWindow(), GLFW_KEY_W) == GLFW_PRESS) {
+			cam->setPosition(cam->getPosition() + glm::vec3(0, 0, -.5f));
+            //cam->getCamera()->setTargetPosition(cam->getCamera()->getTarget() + glm::vec3(0, 0, -.5f));
+
+            l->setPosition(l->getPosition()+glm::vec3(0, 0, -.5f));
+
+		}else if (glfwGetKey(rama->getWindow(), GLFW_KEY_S) == GLFW_PRESS) {
+			cam->setPosition(cam->getPosition() + glm::vec3(0, 0, .5f));
+            //cam->getCamera()->setTargetPosition(cam->getCamera()->getTarget() + glm::vec3(0, 0, .5f));
+
+            l->setPosition(l->getPosition()+glm::vec3(0, 0, .5f));
+
+        }
+
+		if (glfwGetKey(rama->getWindow(), GLFW_KEY_A) == GLFW_PRESS) {
+			cam->setPosition(cam->getPosition() + glm::vec3(.5f, 0, 0));
+            //cam->getCamera()->setTargetPosition(cam->getCamera()->getTarget() + glm::vec3(.5f, 0, 0));
+
+            l->setPosition(l->getPosition()+glm::vec3(0.5f, 0, 0));
+
+		}else if (glfwGetKey(rama->getWindow(), GLFW_KEY_D) == GLFW_PRESS) {
+			cam->setPosition(cam->getPosition() + glm::vec3(-.5f, 0, 0));
+            //cam->getCamera()->setTargetPosition(cam->getCamera()->getTarget() + glm::vec3(-.5f, 0, 0));
+
+            l->setPosition(l->getPosition()+glm::vec3(-.5f, 0, 0));
+
+		}
+
+       /* glUseProgram(shad->getShader()->getID());
+        shad->getShader()->setVec3("objectColor", glm::vec3(1.0f,0.5f,0.31f));
+        shad->getShader()->setVec3("lightColor", glm::vec3(1.0f,1.f,1.f));
+        shad->getShader()->setVec3("lightPos", lightPos);
+        shad->getShader()->setVec3("viewPos",cam->getCamera()->getPosition());*/
+        rama->draw(shad);
+        rama->drawSkybox(shaderSkybox);
+        //rama->drawHudMenus();
+
+        // Intercambiamos buffers
+        glfwSwapBuffers(rama->getWindow());
+        // Comprueba los eventos
+        glfwPollEvents();
+
+    }
+    delete rama;
+
+    //delete rama;
+
+    return 0;
+}

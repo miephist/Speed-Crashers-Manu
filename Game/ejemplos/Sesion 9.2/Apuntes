@@ -1,0 +1,9 @@
+Para compilar un único archivo manualmente y generar su .o:
+    - g++ dos.cpp -c
+    
+Para generar el main (uniendo todos los .o para asi juntar aquellas funciones o variables que estan sin enlazar):
+    - g++ main.cpp dos.o uno.o -o main
+    
+Archivos .o = archivos binarios que contienen direcciones de memoria con todas las directrices a ejecutar una vez sean puestos en marcha.
+
+En un struct por defecto todo es público mientras que en una clase todo es privado.

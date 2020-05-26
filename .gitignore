@@ -1,0 +1,25 @@
+#EJECUTABLE
+Game/ejecutable
+Game/src/*.exe
+Game/src/ejecutable
+Game/src/OpenGL/ejecutable
+
+#ARCHIVOS COMPILADOS
+Game/src/*.o
+Game/obj/*.o
+Game/obj/*/*.o
+Game/obj/OpenGL/*/*.o
+Game/obj/OpenGL/*/*/*.o
+Game/src/OpenGL/*.o
+Game/src/OpenGL/ResourceManager/*.o
+Game/ejemplos/raknet/ejemplo/*.o
+Game/ejemplos/raknet/ejemplo/*.o
+Game/ejemplos/raknet/ejemplo_simple/*.o
+
+#VISUAL STUDIO
+Game/src/.vscode/
+
+#DIRECTORIO
+.directory
+
+Game/\.vscode/c_cpp_properties\.json
